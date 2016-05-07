@@ -8,7 +8,12 @@ app.config([
 		.state('home', {
 			url: '/home',
 			templateUrl: '/home.html',
-			controller: 'MainCtrl'
+			controller: 'MainCtrl',
+			resolve: {
+				photoPromise: ['photos', function(photos){
+					return photos.getAll();
+				}]
+			}
 		})
 		.state('photos', {
 			url: '/photos/{id}',
@@ -30,9 +35,19 @@ app.config([
 	}
 ]);
 
-app.factory('photos', [ function(){
+app.factory('photos', ['$http', function($http){
 	var o = {
 		photos: []
+	};
+	o.getAll = function(){
+		return $http.get('/home').success(function(data){
+			angular.copy(data, o.photos);
+		});
+	};
+	o.create = function(photo){
+		return $http.post('/home', photo).success(function(data){
+			o.photos.push(photo);
+		});
 	};
 	return o;
 }]);
@@ -44,11 +59,9 @@ app.controller('MainCtrl', [
 		$scope.photos = photos.photos;
 		$scope.addPhoto = function () {
 			if(!$scope.title || !$scope.link === ''){ return; }
-			$scope.photos.push({
+			photos.create({
 				title: $scope.title,
-				link: $scope.link,
-				likes: 0,
-				author: 'user'
+				link: $scope.link
 			});
 			$scope.title = '';
 			$scope.link = '';
