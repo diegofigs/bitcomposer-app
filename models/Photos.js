@@ -6,4 +6,9 @@ var PhotoSchema = new mongoose.Schema({
 	likes: {type: Number, default: 0}
 });
 
+PhotoSchema.methods.likePhoto = function(cb){
+	this.likes += 1;
+	this.save(cb);
+};
+
 mongoose.model('Photo', PhotoSchema);
