@@ -18,7 +18,12 @@ app.config([
 		.state('photos', {
 			url: '/photos/{id}',
 			templateUrl: '/photos.html',
-			controller: 'PhotosCtrl'
+			controller: 'PhotosCtrl',
+			resolve: {
+				photo: ['$stateParams', 'photos', function($stateParams, photos){
+					return photos.get($stateParams.id);
+				}]
+			}
 		})
 		.state('popular', {
 			url: '/popular',
@@ -49,6 +54,16 @@ app.factory('photos', ['$http', function($http){
 			o.photos.push(photo);
 		});
 	};
+	o.like = function(photo){
+		return $http.put('/photos/'+ photo._id +'/like').success(function(data){
+			photo.likes += 1;
+		});
+	};
+	o.get = function(id){
+		return $http.get('/photos/'+ id).then(function(res){
+			return res.data;
+		});
+	};
 	return o;
 }]);
 
@@ -67,17 +82,17 @@ app.controller('MainCtrl', [
 			$scope.link = '';
 		};
 		$scope.likePhoto = function(photo){
-			photo.likes += 1;
+			photos.like(photo);
 		};
 	}
 ]);
 
 app.controller('PhotosCtrl', [
 	'$scope',
-	'$stateParams',
+	'photo',
 	'photos',
-	function($scope, $stateParams, photos){
-		$scope.photo = photos.photos[$stateParams.id];
+	function($scope, photo, photos){
+		$scope.photo = photo;
 	}
 ]);
 

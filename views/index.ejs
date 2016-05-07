@@ -34,7 +34,7 @@
 			<h1 class="page-header">Photos!!!</h1>
 			<div ng-repeat="photo in photos | orderBy: '-likes' ">
 				<span class="glyphicon glyphicon-thumbs-up" ng-click="likePhoto(photo)"></span>
-				<a ng-show="photo.link" href="#/photos/{{$index}}">
+				<a ng-show="photo.link" href="#/photos/{{photo._id}}">
 					{{photo.title}}
 				</a>
 				<span ng-hide="photo.link">
@@ -57,7 +57,7 @@
 		<script type="text/ng-template" id="/photos.html">
 			<div class="page-header">
 				<h3>
-					<a ng-show="photo.link" href="photo.link">
+					<a ng-show="photo.link" href="{{photo.link}}">
 						{{photo.title}}
 					</a>
 					<span ng-hide="photo.link">
@@ -72,7 +72,7 @@
 			<h1 class="page-header">Popular</h1>
 			<div ng-repeat="photo in photos | orderBy: '-likes' | limitTo: 5 ">
 				<span class="glyphicon glyphicon-thumbs-up" ng-click="likePhoto(photo)"></span>
-				<a ng-show="photo.link" href="#/photos/{{$index}}">
+				<a ng-show="photo.link" href="#/photos/{{photo._id}}">
 					{{photo.title}}
 				</a>
 				<span ng-hide="photo.link">
@@ -84,7 +84,7 @@
 		<!--	favorites template	-->
 		<script type="text/ng-template" id="/favorites.html">
 			<div ng-repeat="photo in photos | orderBy: '-likes' ">
-				<a ng-show="photo.link" href="#/photos/{{$index}}">
+				<a ng-show="photo.link" href="#/photos/{{photo._id}}">
 					{{photo.title}}
 				</a>
 				<span ng-hide="photo.link">
