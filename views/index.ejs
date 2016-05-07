@@ -25,29 +25,32 @@
 	<body class="container" ng-app="app" ng-controller="MainCtrl">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<h1 class="page-header">Photos!!!</h1>
-				<div ng-repeat="photo in photos | orderBy: '-likes' ">
-					<span class="glyphicon glyphicon-thumbs-up" ng-click="likePhoto(photo)"></span>
-					<a ng-show="photo.url" href="{{photo.url}}">
-						{{photo.title}}
-					</a>
-					<span ng-hide="photo.url">
-						{{photo.title}}
-					</span> 
-					- likes: {{photo.likes}}
-				</div>
-				<form ng-submit="addPhoto()">
-					<h3>Add a new photo!</h3>
-					<div class="form-group">
-						<input class="form-control" type="text" ng-model="title"></input>
-					</div>
-					<div class="form-group">
-						<input class="form-control" type="text" ng-model="url"></input>
-					</div>
-					<button type="submit" class="btn btn-primary">Post</button>
-				</form>
+				<ui-view></ui-view>
 			</div>
 		</div>
+		<script type="text/ng-template" id="/home.html">
+			<h1 class="page-header">Photos!!!</h1>
+			<div ng-repeat="photo in photos | orderBy: '-likes' ">
+				<span class="glyphicon glyphicon-thumbs-up" ng-click="likePhoto(photo)"></span>
+				<a ng-show="photo.link" href="{{photo.link}}">
+					{{photo.title}}
+				</a>
+				<span ng-hide="photo.link">
+					{{photo.title}}
+				</span> 
+				- likes: {{photo.likes}}
+			</div>
+			<form ng-submit="addPhoto()">
+				<h3>Add a new photo!</h3>
+				<div class="form-group">
+					<input class="form-control" type="text" ng-model="title"></input>
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="text" ng-model="link"></input>
+				</div>
+				<button type="submit" class="btn btn-primary">Post</button>
+			</form>
+		</script>
 	</body>
 
 </html>

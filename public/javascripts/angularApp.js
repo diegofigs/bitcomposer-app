@@ -1,4 +1,19 @@
-var app = angular.module('app', []);
+var app = angular.module('app', ['ui.router']);
+
+app.config([
+	'$stateProvider',
+	'$urlRouterProvider',
+	function($stateProvider, $urlRouterProvider){
+		$stateProvider
+		.state('home', {
+			url: '/home',
+			templateUrl: '/home.html',
+			controller: 'MainCtrl'
+		});
+		
+		$urlRouterProvider.otherwise('home');
+	}
+]);
 
 app.factory('photos', [ function(){
 	var o = {
@@ -13,14 +28,14 @@ app.controller('MainCtrl', [
 	function ($scope, photos) {
 		$scope.photos = photos.photos;
 		$scope.addPhoto = function () {
-			if(!$scope.title || !$scope.url === ''){ return; }
+			if(!$scope.title || !$scope.link === ''){ return; }
 			$scope.photos.push({
 				title: $scope.title,
-				url: $scope.url,
+				link: $scope.link,
 				likes: 0
 			});
 			$scope.title = '';
-			$scope.url = '';
+			$scope.link = '';
 		};
 		$scope.likePhoto = function(photo){
 			photo.likes += 1;
