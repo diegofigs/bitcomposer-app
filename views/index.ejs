@@ -22,11 +22,12 @@
 		<style> .glyphicon-thumbs-up { cursor:pointer } </style>
 	</head>
 
-	<body class="container" ng-app="postMe" ng-controller="MainCtrl">
+	<body class="container" ng-app="app" ng-controller="MainCtrl">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
+				<h1 class="page-header">Photos!!!</h1>
 				<div ng-repeat="photo in photos | orderBy: '-likes' ">
-					<span ng-click="likePhoto(photo)">^</span>
+					<span class="glyphicon glyphicon-thumbs-up" ng-click="likePhoto(photo)"></span>
 					<a ng-show="photo.url" href="{{photo.url}}">
 						{{photo.title}}
 					</a>
@@ -36,9 +37,14 @@
 					- likes: {{photo.likes}}
 				</div>
 				<form ng-submit="addPhoto()">
-					<input type="text" ng-model="title"></input>
-					<input type="text" ng-model="url"></input>
-					<button type="submit">Post</button>
+					<h3>Add a new photo!</h3>
+					<div class="form-group">
+						<input class="form-control" type="text" ng-model="title"></input>
+					</div>
+					<div class="form-group">
+						<input class="form-control" type="text" ng-model="url"></input>
+					</div>
+					<button type="submit" class="btn btn-primary">Post</button>
 				</form>
 			</div>
 		</div>
