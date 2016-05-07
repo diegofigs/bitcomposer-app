@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 var PhotoSchema = new mongoose.Schema({
 	title: String,
 	link: String,
-	likes: {type: Number, default: 0}
+	likes: {type: Number, default: 0},
+	author: String
 });
 
 PhotoSchema.methods.likePhoto = function(cb){
