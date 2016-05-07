@@ -14,6 +14,16 @@ app.config([
 			url: '/photos/{id}',
 			templateUrl: '/photos.html',
 			controller: 'PhotosCtrl'
+		})
+		.state('popular', {
+			url: '/popular',
+			templateUrl: '/popular.html',
+			controller: 'PopularCtrl'
+		})
+		.state('favorite', {
+			url: '/favorites',
+			templateUrl: '/favorites.html',
+			controller: 'FavoritesCtrl'
 		});
 		
 		$urlRouterProvider.otherwise('home');
@@ -37,7 +47,8 @@ app.controller('MainCtrl', [
 			$scope.photos.push({
 				title: $scope.title,
 				link: $scope.link,
-				likes: 0
+				likes: 0,
+				author: 'user'
 			});
 			$scope.title = '';
 			$scope.link = '';
@@ -54,5 +65,21 @@ app.controller('PhotosCtrl', [
 	'photos',
 	function($scope, $stateParams, photos){
 		$scope.photo = photos.photos[$stateParams.id];
+	}
+]);
+
+app.controller('PopularCtrl', [
+	'$scope',
+	'photos',
+	function($scope, photos){
+		$scope.photos = photos.photos;
+	}
+]);
+
+app.controller('FavoritesCtrl', [
+	'$scope',
+	'photos',
+	function($scope, photos){
+		$scope.photos = photos.photos;
 	}
 ]);
