@@ -19,11 +19,28 @@
 
 		<!-- Custom styles for this template -->
 		<link href="/stylesheets/style.css" rel="stylesheet">
+		<style> .glyphicon-thumbs-up { cursor:pointer } </style>
 	</head>
 
-	<body ng-app="postMe" ng-controller="MainCtrl">
-		<div ng-repeat="photo in photos">
-			{{photo.title}} - likes: {{photo.likes}}
+	<body class="container" ng-app="postMe" ng-controller="MainCtrl">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div ng-repeat="photo in photos | orderBy: '-likes' ">
+					<span ng-click="likePhoto(photo)">^</span>
+					<a ng-show="photo.url" href="{{photo.url}}">
+						{{photo.title}}
+					</a>
+					<span ng-hide="photo.url">
+						{{photo.title}}
+					</span> 
+					- likes: {{photo.likes}}
+				</div>
+				<form ng-submit="addPhoto()">
+					<input type="text" ng-model="title"></input>
+					<input type="text" ng-model="url"></input>
+					<button type="submit">Post</button>
+				</form>
+			</div>
 		</div>
 	</body>
 
