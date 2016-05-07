@@ -28,11 +28,13 @@
 				<ui-view></ui-view>
 			</div>
 		</div>
+		
+		<!--	home template	-->
 		<script type="text/ng-template" id="/home.html">
 			<h1 class="page-header">Photos!!!</h1>
 			<div ng-repeat="photo in photos | orderBy: '-likes' ">
 				<span class="glyphicon glyphicon-thumbs-up" ng-click="likePhoto(photo)"></span>
-				<a ng-show="photo.link" href="{{photo.link}}">
+				<a ng-show="photo.link" href="#/photos/{{$index}}">
 					{{photo.title}}
 				</a>
 				<span ng-hide="photo.link">
@@ -50,6 +52,20 @@
 				</div>
 				<button type="submit" class="btn btn-primary">Post</button>
 			</form>
+		</script>
+		<!--	-->
+		<script type="text/ng-template" id="/photos.html">
+			<div class="page-header">
+				<h3>
+					<a ng-show="photo.link" href="photo.link">
+						{{photo.title}}
+					</a>
+					<span ng-hide="photo.link">
+						{{photo.title}}
+					</span> 
+					- likes: {{photo.likes}}
+				</h3>
+			</div>
 		</script>
 	</body>
 
