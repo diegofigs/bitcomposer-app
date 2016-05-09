@@ -62,7 +62,7 @@
 		
 		<!--	home template	-->
 		<script type="text/ng-template" id="/home.html">
-			<h1 class="page-header">Photos!!!</h1>
+			<h1 class="page-header">Home</h1>
 			<div ng-repeat="photo in photos | orderBy: '-likes' ">
 				<span class="glyphicon glyphicon-thumbs-up" ng-click="likePhoto(photo)"></span>
 				<a ng-show="photo.link" href="#/photos/{{photo._id}}">
@@ -114,6 +114,7 @@
 		</script>
 		<!--	favorites template	-->
 		<script type="text/ng-template" id="/favorites.html">
+			<h1 class="page-header">Favorites</h1>
 			<div ng-repeat="photo in photos | orderBy: '-likes' ">
 				<a ng-show="photo.link" href="#/photos/{{photo._id}}">
 					{{photo.title}}
