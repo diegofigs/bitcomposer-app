@@ -73,7 +73,7 @@
 				</span> 
 				- likes: {{photo.likes}} - by: {{photo.author}}
 			</div>
-			<form ng-submit="addPhoto()">
+			<form ng-submit="addPhoto()" ng-show="isLoggedIn()">
 				<h3>Add a new photo</h3>
 				<div class="form-group">
 					<input class="form-control" type="text" ng-model="title"></input>
