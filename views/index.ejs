@@ -19,17 +19,40 @@
 
 		<!-- Custom styles for this template -->
 		<link href="/stylesheets/style.css" rel="stylesheet">
+		<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
 		<style> .glyphicon-thumbs-up { cursor:pointer } </style>
 	</head>
 
-	<body class="container" ng-app="app" ng-controller="MainCtrl">
-		<nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
-			<ul class="nav navbar-nav">
-				<li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
-				<li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
-				<li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
-				<li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
-			</ul>
+	<body class="container" ng-app="app">
+		<nav class="navbar navbar-default" ng-controller="NavCtrl">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/#/home">Snapshots <i class="em em-camera"></i></a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-left">
+						<li ng-show="isLoggedIn()"><a href="#/favorites">Favorites</a></li>
+						<li ng-show="isLoggedIn()"><a href="#/popular">Popular</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
+						<li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+						<li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
+						<li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container-fluid -->
 		</nav>
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
