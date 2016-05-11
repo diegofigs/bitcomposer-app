@@ -28,12 +28,12 @@ app.config([
 		.state('popular', {
 			url: '/popular',
 			templateUrl: '/popular.html',
-			controller: 'PopularCtrl'
+			controller: 'MainCtrl'
 		})
 		.state('favorite', {
 			url: '/favorites',
 			templateUrl: '/favorites.html',
-			controller: 'FavoritesCtrl'
+			controller: 'MainCtrl'
 		})
 		.state('login', {
 			url: '/login',
@@ -119,10 +119,10 @@ app.factory('photos', ['$http', 'auth', function($http, auth){
 		});
 	};
 	o.like = function(photo){
-		return $http.put('/photos/'+ photo._id +'/like', null, {
+		return $http.put('/photos/'+ photo._id +'/like/'+ auth.currentUser(), null, {
 			headers: {Authorization: 'Bearer '+auth.getToken()}
 		}).success(function(data){
-			photo.likes += 1;
+			angular.copy(data, photo);
 		});
 	};
 	o.get = function(id){
@@ -184,6 +184,13 @@ app.controller('MainCtrl', [
 			$scope.title = '';
 			$scope.link = '';
 		};
+		$scope.isLiked = function(photo){
+			if(photo.users.indexOf(auth.currentUser()) > -1){
+				return true;
+			}
+			else
+				return false;
+		};
 		$scope.likePhoto = function(photo){
 			photos.like(photo);
 		};
@@ -195,22 +202,7 @@ app.controller('PhotosCtrl', [
 	'photo',
 	'photos',
 	function($scope, photo, photos){
+		$scope.photos = photos.photos;
 		$scope.photo = photo;
-	}
-]);
-
-app.controller('PopularCtrl', [
-	'$scope',
-	'photos',
-	function($scope, photos){
-		$scope.photos = photos.photos;
-	}
-]);
-
-app.controller('FavoritesCtrl', [
-	'$scope',
-	'photos',
-	function($scope, photos){
-		$scope.photos = photos.photos;
 	}
 ]);
