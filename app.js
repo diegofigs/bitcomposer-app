@@ -12,7 +12,7 @@ require('./models/Photos');
 require('./models/Users');
 require('./config/passport');
 
-mongoose.connect('mongodb://localhost/handy');
+mongoose.connect('mongodb://localhost/bc');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
