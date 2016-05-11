@@ -83,8 +83,8 @@ router.get('/photos/:photo', function(req, res, next){
 });
 
 /* PUT route for liking photos */
-router.put('/photos/:photo/like', auth, function(req, res, next){
-	req.photo.likePhoto(function(err, photo){
+router.put('/photos/:photo/like/:username', auth, function(req, res, next){
+	req.photo.likePhoto(req.params.username, function(err, photo){
 		if(err){ return next(err);}
 		res.json(photo);
 	});
