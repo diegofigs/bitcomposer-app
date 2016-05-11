@@ -5,19 +5,18 @@ var jwt = require('jsonwebtoken');
 var UserSchema = new mongoose.Schema({
 	username: {type: String, lowercase: true, unique: true},
 	hash: String,
-	salt: String
+	salt: String,
+	photos: [{type: mongoose.Schema.Types.ObjectId, ref: 'Photo'}]
 });
 
 UserSchema.methods.setPassword = function(password){
 	// 128 bit string in hex format
 	this.salt = crypto.randomBytes(16).toString('hex');
-	
 	this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
 };
 
 UserSchema.methods.validPassword = function(password){
 	var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
-	
 	return this.hash === hash;
 };
 
