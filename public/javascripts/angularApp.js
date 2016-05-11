@@ -54,6 +54,11 @@ app.config([
 				  $state.go('home');
 				}
 			}]
+		})
+		.state('uploads', {
+			url: '/uploads',
+			templateUrl: '/uploads.html',
+			controller: 'MainCtrl'
 		});
 		
 		$urlRouterProvider.otherwise('home');
@@ -191,6 +196,13 @@ app.controller('MainCtrl', [
 			else
 				return false;
 		};
+		$scope.isAuthor = function(photo){
+			if(photo.author === auth.currentUser()){
+				return true;
+			}
+			else
+				return false;
+		}
 		$scope.likePhoto = function(photo){
 			photos.like(photo);
 		};

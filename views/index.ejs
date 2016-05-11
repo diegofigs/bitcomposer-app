@@ -42,6 +42,7 @@
 					<ul class="nav navbar-nav navbar-left">
 						<li ng-show="isLoggedIn()"><a href="#/favorites">Favorites</a></li>
 						<li ng-show="isLoggedIn()"><a href="#/popular">Popular</a></li>
+						<li ng-show="isLoggedIn()"><a href="#/uploads">Uploads</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
@@ -124,6 +125,20 @@
 		<script type="text/ng-template" id="/favorites.html">
 			<h1 class="page-header">Favorites</h1>
 			<div ng-repeat="photo in photos | filter: isLiked | orderBy: '-likes' ">
+				<span ng-show="isLiked(photo)" class="glyphicon glyphicon-thumbs-down"></span>
+				<a ng-show="photo.link" href="#/photos/{{photo._id}}">
+					{{photo.title}}
+				</a>
+				<span ng-hide="photo.link">
+					{{photo.title}}
+				</span> 
+				-- <i class="em em---1"></i> Likes: {{photo.likes}} <i class="em em-registered"></i>Submitted by: {{photo.author}}
+			</div>
+		</script>
+		<!--	uploads template	-->
+		<script type="text/ng-template" id="/uploads.html">
+			<h1 class="page-header">Uploads</h1>
+			<div ng-repeat="photo in photos | filter: isAuthor | orderBy: '-likes' ">
 				<span ng-show="isLiked(photo)" class="glyphicon glyphicon-thumbs-down"></span>
 				<a ng-show="photo.link" href="#/photos/{{photo._id}}">
 					{{photo.title}}
