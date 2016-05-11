@@ -64,14 +64,15 @@
 		<script type="text/ng-template" id="/home.html">
 			<h1 class="page-header">Home</h1>
 			<div ng-repeat="photo in photos | orderBy: '-likes' ">
-				<span class="glyphicon glyphicon-thumbs-up" ng-click="likePhoto(photo)"></span>
+				<span ng-hide="isLiked(photo)" class="glyphicon glyphicon-thumbs-up" ng-click="likePhoto(photo)"></span>
+				<span ng-show="isLiked(photo)" class="glyphicon glyphicon-thumbs-down"></span>
 				<a ng-show="photo.link" href="#/photos/{{photo._id}}">
 					{{photo.title}}
 				</a>
 				<span ng-hide="photo.link">
 					{{photo.title}}
 				</span> 
-				- likes: {{photo.likes}} - by: {{photo.author}}
+				-- <i class="em em---1"></i> Likes: {{photo.likes}} <i class="em em-registered"></i>Submitted by: {{photo.author}}
 			</div>
 			<form ng-submit="addPhoto()" ng-show="isLoggedIn()">
 				<h3>Add a new photo</h3>
@@ -93,41 +94,49 @@
 					</a>
 					<span ng-hide="photo.link">
 						{{photo.title}}
-					</span> 
-					- likes: {{photo.likes}} - by: {{photo.author}}
+					</span>
 				</h3>
+				<h5>Submitted by: {{photo.author}}</h5>
+			</div>
+			<i class="em em---1"></i>Likes: {{photo.likes}}
+			<br>
+			<i class="em em-heavy_plus_sign"></i>Upvoters:
+			<div ng-repeat="user in photo.users">
+				{{user}}
 			</div>
 		</script>
 		<!--	popular template	-->
 		<script type="text/ng-template" id="/popular.html">
 			<h1 class="page-header">Popular</h1>
-			<div ng-repeat="photo in photos | orderBy: '-likes' | limitTo: 5 ">
-				<span class="glyphicon glyphicon-thumbs-up" ng-click="likePhoto(photo)"></span>
+			<div ng-repeat="photo in photos | orderBy: '-likes' | limitTo: 3 ">
+				<span ng-hide="isLiked(photo)" class="glyphicon glyphicon-thumbs-up" ng-click="likePhoto(photo)"></span>
+				<span ng-show="isLiked(photo)" class="glyphicon glyphicon-thumbs-down"></span>
 				<a ng-show="photo.link" href="#/photos/{{photo._id}}">
 					{{photo.title}}
 				</a>
 				<span ng-hide="photo.link">
 					{{photo.title}}
 				</span> 
-				- likes: {{photo.likes}} - by: {{photo.author}}
+				-- <i class="em em---1"></i> Likes: {{photo.likes}} <i class="em em-registered"></i>Submitted by: {{photo.author}}
 			</div>
 		</script>
 		<!--	favorites template	-->
 		<script type="text/ng-template" id="/favorites.html">
 			<h1 class="page-header">Favorites</h1>
-			<div ng-repeat="photo in photos | orderBy: '-likes' ">
+			<div ng-repeat="photo in photos | filter: isLiked | orderBy: '-likes' ">
+				<span ng-show="isLiked(photo)" class="glyphicon glyphicon-thumbs-down"></span>
 				<a ng-show="photo.link" href="#/photos/{{photo._id}}">
 					{{photo.title}}
 				</a>
 				<span ng-hide="photo.link">
 					{{photo.title}}
 				</span> 
-				- likes: {{photo.likes}} - by: {{photo.author}}
+				-- <i class="em em---1"></i> Likes: {{photo.likes}} <i class="em em-registered"></i>Submitted by: {{photo.author}}
 			</div>
 		</script>
 		<script type="text/ng-template" id="/register.html">
 			<div class="page-header">
-				<h1>Photos!!!</h1>
+				<h1>Register</h1>
 			</div>
 
 			<div ng-show="error" class="alert alert-danger row">
@@ -135,7 +144,6 @@
 			</div>
 
 			<form ng-submit="register()" style="margin-top:30px;">
-				<h3>Register</h3>
 
 				<div class="form-group">
 					<input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
@@ -148,7 +156,7 @@
 		</script>
 		<script type="text/ng-template" id="/login.html">
 			<div class="page-header">
-				<h1>Photos!!!</h1>
+				<h1>Login</h1>
 			</div>
 
 			<div ng-show="error" class="alert alert-danger row">
@@ -156,7 +164,6 @@
 			</div>
 
 			<form ng-submit="logIn()" style="margin-top:30px;">
-				<h3>Log In</h3>
 
 				<div class="form-group">
 					<input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
